@@ -7,10 +7,10 @@ export const MyPlaylist = () => {
     <div className='container'>
     <h1 className='title text-center mt-5'>My favorite songs</h1>
     <div className='d-flex align-items-center'>
-    <input type='text' className='form-control' placeHolder='Ingrese el codigo
+    <input ref={urlRef} type='text' className='form-control' placeHolder='Ingrese el codigo
     del album aqui...'></input>
     <div className='form-check ms-2'>
-    <input className='form-check-input' type='checkbox' />
+    <input ref={favoriteRef} className='form-check-input' type='checkbox' />
     <label className='form-check-label'>
     Favorite
     </label>
