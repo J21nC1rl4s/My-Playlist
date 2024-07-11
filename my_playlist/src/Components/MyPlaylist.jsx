@@ -2,6 +2,7 @@
 * Componente fusion entre Title y Form
 */
 import { SpotifyPlayer } from "./SpotifyPlayer"
+
 export const MyPlaylist = () => {
     return (
     <div className='container'>
