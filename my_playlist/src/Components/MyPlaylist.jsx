@@ -1,17 +1,59 @@
 /**
-* Componente fusion entre Title y Form
-*/  
-import  useRef  from "react";
+* Playlist component
+*/
+
 import { SpotifyPlayer } from "./SpotifyPlayer"
+import { useRef, useState } from "react"
+import {v4 as uuid} from 'uuid';
 
-const urlRef = useRef();
-const favoriteRef = useRef();
+
+export function MyPlaylist() {
+
+     /**
+     * Creando variables para asociar con inputs usando hook useRef
+     */
+    const urlRef = useRef() // Esto es un hook que asociamos a un input
+    const favoriteRef = useRef()
+
+    /**
+     * useState es un hook que permite vigilar el ciclo de vida de un elemento
+     */
+    const [songList, setSongList] = useState([
+        {id: uuid(), url:"3fn4HfVz5dhmE0PG24rh6h", favorite:true},
+        {id: uuid(), url:"2UJcKiJxNryhL050F5Z1Fk", favorite:false},
+        {id: uuid(), url:"5B4PYA7wNN4WdEXdIJu58a", favorite:true},
+        {id: uuid(), url:"1XqzXn8a7Z15Z5tBSouXcH", favorite:false}
+    ]);
 
 
-  
-  
+    /**Funcion para agregar canciones */
+    function addSong(){
+        console.log('Presionando boton agregar')
+        const url = urlRef.current.value;
+        const favorite = favoriteRef.current.checked;
+        console.log(`Se escribio ${url} ${favorite}`);
+        /**Con los datos obtenidos podemos crear un objeto song */
+        const newSong = {
+            id:uuid(),
+            url:url,
+            favorite:favorite
+        }
 
-export const MyPlaylist = () => {
+        const newSongList = [...songList, newSong]
+        setSongList(newSongList);
+
+        alert('Se agrego cancion');
+
+    }
+        function removeSongs(){
+            const updatedList = songList.filter(song => song.favorite === true);
+            console.log(updatedList);
+            setSongList(updatedList);
+            alert('Se eliminaron no favoritas');
+        }
+
+
+    
     return (
         <div className='container'>
             <h1 className='title text-center mt-5'>My favorite songs</h1>
@@ -24,15 +66,14 @@ export const MyPlaylist = () => {
     Favorite
                     </label>
                 </div>
-                <button className='btn btn-success ms-2'><i class="bi bi-plus-circlefill"></i></button>
-                <button className='btn btn-danger ms-2'><i class="bi bitrash"></i></button>
+                <button className="btn btn-success m-2" onClick={addSong}><i class="bi bi-check-circle"></i></button>
+                <button className='btn btn-danger m-2' onClick={removeSongs}><i class="bi bi-trash"></i></button>
             </div>
             <div>
-                <SpotifyPlayer url="" favorite={true} />
+                {
+                songList.map(song => <SpotifyPlayer urlSong={song.url} favorite={song.favorite} key={song.id}/>)
+                }
             </div>
         </div>
     )
 }
-
-
-  
